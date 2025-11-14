@@ -1,0 +1,316 @@
+======================================================================
+評估正規化資料
+======================================================================
+載入正規化資料...
+載入完成: 10050 張圖像
+
+開始評估 (Top-10)...
+總共 10050 張圖像
+
+計算 cosine 相似度...
+  完成！耗時: 1.83 秒
+  開始評估準確率...
+  cosine 評估完成！
+
+計算 euclidean 相似度...
+  完成！耗時: 4.80 秒
+  開始評估準確率...
+  euclidean 評估完成！
+
+計算 pcc 相似度...
+  完成！耗時: 5.53 秒
+  開始評估準確率...
+  pcc 評估完成！
+
+正規化資料評估完成！總耗時: 33.52 秒
+
+======================================================================
+                                評估結果摘要                                
+======================================================================
+資料類型: 正規化
+總圖像數: 10050
+類別數: 50
+----------------------------------------------------------------------
+
+方法                   平均準確率           標準差             最小值             最大值            
+----------------------------------------------------------------------
+cosine               0.9897          0.0815          0.0000          1.0000         
+euclidean            0.9887          0.0855          0.0000          1.0000         
+pcc                  0.9899          0.0815          0.0000          1.0000         
+
+----------------------------------------------------------------------
+各類別平均準確率 (Top 10):
+----------------------------------------------------------------------
+
+cosine:
+   1. Flower                         0.9960
+   2. Owls                           0.9955
+   3. AncestorDinoArt                0.9950
+   4. Basketball                     0.9950
+   5. BWimage                        0.9950
+   6. Cartoon                        0.9950
+   7. DeerAntelope                   0.9950
+   8. Group                          0.9950
+   9. Satelliteimage                 0.9950
+  10. Sunflower                      0.9950
+
+euclidean:
+   1. AncestorDinoArt                0.9950
+   2. Baseball                       0.9950
+   3. Cartoon                        0.9950
+   4. Cropcycle                      0.9950
+   5. F1                             0.9950
+   6. Flower                         0.9950
+   7. Group                          0.9950
+   8. Satelliteimage                 0.9950
+   9. RacingMotor                    0.9945
+  10. Soccer                         0.9945
+
+pcc:
+   1. Flower                         0.9960
+   2. Sunset                         0.9960
+   3. Owls                           0.9955
+   4. AncestorDinoArt                0.9950
+   5. Basketball                     0.9950
+   6. BWimage                        0.9950
+   7. Cartoon                        0.9950
+   8. Group                          0.9950
+   9. RacingMotor                    0.9950
+  10. Satelliteimage                 0.9950
+
+======================================================================
+
+======================================================================
+評估非正規化資料
+======================================================================
+載入非正規化資料...
+載入完成: 10050 張圖像
+
+開始評估 (Top-10)...
+總共 10050 張圖像
+
+計算 cosine 相似度...
+  完成！耗時: 1.69 秒
+  開始評估準確率...
+  cosine 評估完成！
+
+計算 euclidean 相似度...
+  完成！耗時: 4.25 秒
+  開始評估準確率...
+  euclidean 評估完成！
+
+計算 pcc 相似度...
+
+完成！耗時: 3.85 秒
+  開始評估準確率...
+  pcc 評估完成！
+
+非正規化資料評估完成！總耗時: 30.12 秒
+
+======================================================================
+                                評估結果摘要                                
+======================================================================
+資料類型: 非正規化
+總圖像數: 10050
+類別數: 50
+----------------------------------------------------------------------
+
+方法                   平均準確率           標準差             最小值             最大值            
+----------------------------------------------------------------------
+cosine               0.2787          0.2950          0.0000          1.0000         
+euclidean            0.2543          0.2854          0.0000          1.0000         
+pcc                  0.2785          0.2949          0.0000          1.0000         
+
+----------------------------------------------------------------------
+各類別平均準確率 (Top 10):
+----------------------------------------------------------------------
+
+cosine:
+   1. AncestorDinoArt                0.7557
+   2. Cartoon                        0.5970
+   3. Volleyball                     0.5955
+   4. Basketball                     0.5761
+   5. Planet                         0.5473
+   6. Tennis                         0.5348
+   7. Satelliteimage                 0.5154
+   8. Soccer                         0.4731
+   9. Billiardsball                  0.4716
+  10. Baseball                       0.4338
+
+euclidean:
+   1. AncestorDinoArt                0.7622
+   2. Volleyball                     0.5627
+   3. Basketball                     0.5408
+   4. Cartoon                        0.5343
+   5. Tennis                         0.5299
+   6. Satelliteimage                 0.4920
+   7. Soccer                         0.4851
+   8. Planet                         0.4781
+   9. Billiardsball                  0.4502
+  10. Baseball                       0.4010
+
+pcc:
+   1. AncestorDinoArt                0.7547
+   2. Cartoon                        0.5970
+   3. Volleyball                     0.5945
+   4. Basketball                     0.5766
+   5. Planet                         0.5488
+   6. Tennis                         0.5353
+   7. Satelliteimage                 0.5144
+   8. Soccer                         0.4726
+   9. Billiardsball                  0.4716
+  10. Baseball                       0.4323
+
+======================================================================
+
+總執行時間: 63.67 秒
+
+======================================================================
+正規化 vs 非正規化 比較分析
+======================================================================
+
+方法                   正規化準確率               非正規化準確率              差異             
+----------------------------------------------------------------------
+cosine               0.9897               0.2787               +0.7110
+euclidean            0.9887               0.2543               +0.7345
+pcc                  0.9899               0.2785               +0.7113
+
+======================================================================
+特徵重要性分析
+======================================================================
+載入正規化資料...
+載入完成: 10050 張圖像
+
+評估特徵: ColorStructure (維度: 32)
+
+開始評估 (Top-10)...
+總共 10050 張圖像
+
+計算 cosine 相似度...
+  完成！耗時: 1.25 秒
+  開始評估準確率...
+  cosine 評估完成！
+
+計算 euclidean 相似度...
+  完成！耗時: 3.66 秒
+  開始評估準確率...
+  euclidean 評估完成！
+
+計算 pcc 相似度...
+C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+  完成！耗時: 3.14 秒
+  開始評估準確率...
+  pcc 評估完成！
+
+評估特徵: ColorLayout (維度: 12)
+
+開始評估 (Top-10)...
+總共 10050 張圖像
+
+計算 cosine 相似度...
+  完成！耗時: 1.23 秒
+  開始評估準確率...
+  cosine 評估完成！
+
+計算 euclidean 相似度...
+  完成！耗時: 3.60 秒
+  開始評估準確率...
+  euclidean 評估完成！
+
+計算 pcc 相似度...
+C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+  完成！耗時: 3.30 秒
+  開始評估準確率...
+  pcc 評估完成！
+
+評估特徵: RegionShape (維度: 36)
+
+開始評估 (Top-10)...
+總共 10050 張圖像
+
+計算 cosine 相似度...
+  完成！耗時: 1.21 秒
+  開始評估準確率...
+  cosine 評估完成！
+
+計算 euclidean 相似度...
+  完成！耗時: 3.56 秒
+  開始評估準確率...
+  euclidean 評估完成！
+
+計算 pcc 相似度...
+C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+  完成！耗時: 3.51 秒
+  開始評估準確率...
+  pcc 評估完成！
+
+評估特徵: HomogeneousTexture (維度: 62)
+
+開始評估 (Top-10)...
+總共 10050 張圖像
+
+計算 cosine 相似度...
+  完成！耗時: 1.33 秒
+  開始評估準確率...
+  cosine 評估完成！
+
+計算 euclidean 相似度...
+  完成！耗時: 4.25 秒
+  開始評估準確率...
+  euclidean 評估完成！
+
+計算 pcc 相似度...
+C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+  完成！耗時: 3.41 秒
+  開始評估準確率...
+  pcc 評估完成！
+
+評估特徵: EdgeHistogram (維度: 80)
+
+開始評估 (Top-10)...
+總共 10050 張圖像
+
+計算 cosine 相似度...
+  完成！耗時: 1.26 秒
+  開始評估準確率...
+  cosine 評估完成！
+
+計算 euclidean 相似度...
+  完成！耗時: 3.72 秒
+  開始評估準確率...
+  euclidean 評估完成！
+
+計算 pcc 相似度...
+C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+C:\Users\User\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+  完成！耗時: 3.24 秒
+  開始評估準確率...
+  pcc 評估完成！
+
+各特徵類型的準確率:
+----------------------------------------------------------------------
+特徵類型                      Cosine          Euclidean       PCC            
+----------------------------------------------------------------------
+ColorStructure            0.3394          0.3537          0.3339         
+ColorLayout               0.3313          0.3723          0.3194         
+RegionShape               0.1208          0.1238          0.1227         
+HomogeneousTexture        0.3181          0.2772          0.3199         
+EdgeHistogram             0.2140          0.2487          0.2328         
+
+======================================================================
+分析完成！
+======================================================================
