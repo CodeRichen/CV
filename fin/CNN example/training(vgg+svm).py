@@ -287,7 +287,7 @@ print("="*60)
 
 official_vgg16_features = tf.keras.applications.VGG16(
     include_top=False,  # 不包含頂部的全連接層
-    weights=None,  # 不載入預訓練權重（從零開始）
+    weights='imagenet',  # ✅ 使用 ImageNet 預訓練權重（1400萬張圖片訓練）
     input_shape=input_shape,
     pooling='avg'  # 使用全局平均池化，輸出 (512,) 特徵向量
 )
