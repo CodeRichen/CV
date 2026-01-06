@@ -1,3 +1,12 @@
+import os
+import warnings
+
+# 設置環境變數以避免 joblib 警告
+os.environ['LOKY_MAX_CPU_COUNT'] = '4'
+
+# 忽略特定警告
+warnings.filterwarnings('ignore', category=UserWarning, module='joblib')
+
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
@@ -24,7 +33,7 @@ print(f"特徵資料維度: {features.shape}")
 
 # 載入標籤資料 (每張圖的類別)
 import os
-name_path = os.path.join(os.path.expanduser("~"), "Downloads", "class", "114-1_電腦視覺", "final report - 1", "name.txt")
+name_path =  "name.txt"
 labels = []
 with open(name_path, 'r', encoding='utf-8') as f:
     for line in f:
@@ -37,7 +46,7 @@ print(f"標籤數量: {len(labels)}")
 print(f"類別總數: {len(set(labels))}")
 
 # 載入測試集編號 (query.txt中的編號為測試集，從1開始計數)
-query_path = os.path.join(os.path.expanduser("~"), "Downloads", "class", "114-1_電腦視覺", "final report - 1", "query.txt")
+query_path = "query.txt"
 test_indices = []
 with open(query_path, 'r') as f:
     for line in f:
