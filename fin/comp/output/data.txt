@@ -1,0 +1,6 @@
+Method	Training_Accuracy	Testing_Accuracy	Overfit_Gap	Precision	Recall	F1-Score	IoU	Std_Accuracy	Best_Class_1	Best_Class_2	Best_Class_3	Worst_Class_1	Worst_Class_2	Worst_Class_3									
+KNN (K=7)	0.700286	0.594667	0.105619	0.633688	0.594667	0.589069	0.441423	0.2167	AncestorDinoArt (1.0000)	BWimage (0.9833)	Satelliteimage (0.8667)	SubSea (0.2833)	Sculpt (0.1500)	Desert (0.0833)									
+SVM (RBF)	0.999286	0.746667	0.252619	0.749154	0.746667	0.745427	0.612554	0.1467	AncestorDinoArt (1.0000)	BWimage (1.0000)	Cartoon (0.9667)	Desert (0.4667)	Archit (0.4167)	Sculpt (0.4000)									
+SVM (Linear)	0.999286	0.712667	0.286619	0.716791	0.712667	0.711108	0.572697	0.1633	AncestorDinoArt (1.0000)	BWimage (1.0000)	Cropcycle (0.9500)	Archit (0.4500)	Castle (0.4167)	Sculpt (0.2667)									
+LDA	0.777857	0.696	0.081857	0.7009	0.696	0.695597	0.550699	0.1454	BWimage (1.0000)	AncestorDinoArt (0.9833)	Cropcycle (0.9667)	Archit (0.4667)	Lion (0.4667)	Sculpt (0.3667)									
+Random Forest (n=200)	0.999286	0.684667	0.314619	0.687691	0.684667	0.675652	0.52868	0.1889	AncestorDinoArt (1.0000)	BWimage (1.0000)	Satelliteimage (0.9833)	DeerAntelope (0.3667)	Sculpt (0.2833)	Archit (0.2000)									

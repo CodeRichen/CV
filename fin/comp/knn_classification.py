@@ -215,6 +215,20 @@ train_acc_svm_linear = accuracy_score(y_train, y_pred_train_svm_linear)
 
 print(f"SVM (Linear) 準確率: {acc_svm_linear:.4f} ({acc_svm_linear*100:.2f}%) - 訓練時間: {time_svm_linear:.2f}秒")
 
+print("\n訓練 SVM (Polynomial kernel)...")
+start_time = time.time()
+svm_poly = SVC(kernel='poly', degree=3, C=1, gamma='scale', random_state=42)
+svm_poly.fit(X_train_scaled, y_train)
+y_pred_svm_poly = svm_poly.predict(X_test_scaled)
+acc_svm_poly = accuracy_score(y_test, y_pred_svm_poly)
+time_svm_poly = time.time() - start_time
+
+# 計算訓練準確率
+y_pred_train_svm_poly = svm_poly.predict(X_train_scaled)
+train_acc_svm_poly = accuracy_score(y_train, y_pred_train_svm_poly)
+
+print(f"SVM (Polynomial) 準確率: {acc_svm_poly:.4f} ({acc_svm_poly*100:.2f}%) - 訓練時間: {time_svm_poly:.2f}秒")
+
 # ==================== LDA 分類 ====================
 print("\n" + "="*60)
 print("開始 LDA 分類...")
@@ -236,16 +250,17 @@ print("開始 Random Forest 分類...")
 print("="*60)
 
 # 測試不同的樹數量
-print("\n測試不同的樹數量...")
+print("\n測試不同的樹數量 (with overfitting reduction)...")
 n_estimators_list = [50, 100, 200]
 best_rf_acc = 0
 best_rf_n = 50
 rf_results = {}
 
 for n in n_estimators_list:
-    print(f"\n測試 n_estimators={n}...")
+    print(f"\n測試 n_estimators={n} (max_depth=10, min_samples_leaf=5)...")
     start_time = time.time()
-    rf = RandomForestClassifier(n_estimators=n, random_state=42, n_jobs=1, max_depth=20)
+    rf = RandomForestClassifier(n_estimators=n, random_state=42, n_jobs=1, 
+                                 max_depth=10, min_samples_leaf=5)
     rf.fit(X_train_scaled, y_train)
     y_pred_train_rf = rf.predict(X_train_scaled)  # 訓練集預測
     y_pred_rf = rf.predict(X_test_scaled)
@@ -276,6 +291,7 @@ all_classifiers_info = [
     ('KNN (K={})'.format(best_k), best_accuracy, y_pred_best, time_knn_best, knn_best, train_accuracy_best),
     ('SVM (RBF)', acc_svm_rbf, y_pred_svm_rbf, time_svm_rbf, svm_rbf, train_acc_svm_rbf),
     ('SVM (Linear)', acc_svm_linear, y_pred_svm_linear, time_svm_linear, svm_linear, train_acc_svm_linear),
+    ('SVM (Poly)', acc_svm_poly, y_pred_svm_poly, time_svm_poly, svm_poly, train_acc_svm_poly),
     ('LDA', acc_lda, y_pred_lda, time_lda, lda, train_acc_lda),
     ('Random Forest (n={})'.format(best_rf_n), best_rf_acc, y_pred_rf_best, time_rf_best, best_rf_model, train_acc_rf_best)
 ]
@@ -284,6 +300,7 @@ all_classifiers = [
     ('KNN (K={})'.format(best_k), best_accuracy, y_pred_best),
     ('SVM (RBF)', acc_svm_rbf, y_pred_svm_rbf),
     ('SVM (Linear)', acc_svm_linear, y_pred_svm_linear),
+    ('SVM (Poly)', acc_svm_poly, y_pred_svm_poly),
     ('LDA', acc_lda, y_pred_lda),
     ('Random Forest (n={})'.format(best_rf_n), best_rf_acc, y_pred_rf_best)
 ]
@@ -418,6 +435,99 @@ for name, feature_idx in feature_combinations.items():
     
     accuracy_subset = accuracy_score(y_test, y_pred_subset)
     print(f"{name:25s} ({len(feature_idx):3d} 特徵): {accuracy_subset:.4f} ({accuracy_subset*100:.2f}%)")
+
+# ==================== 特徵重要性分析: LDA, SVM Linear, Random Forest ====================
+print("\n" + "="*60)
+print("特徵組重要性分析 - LDA")
+print("="*60)
+
+lda_feature_results = {}
+for name, feature_idx in feature_combinations.items():
+    if len(feature_idx) == 0 or name in ['All Features', 'Color Features', 'Texture Features']:
+        continue
+    
+    X_train_subset = X_train[:, feature_idx]
+    X_test_subset = X_test[:, feature_idx]
+    
+    scaler_subset = StandardScaler()
+    X_train_subset_scaled = scaler_subset.fit_transform(X_train_subset)
+    X_test_subset_scaled = scaler_subset.transform(X_test_subset)
+    
+    lda_subset = LinearDiscriminantAnalysis()
+    lda_subset.fit(X_train_subset_scaled, y_train)
+    y_pred_subset = lda_subset.predict(X_test_subset_scaled)
+    
+    accuracy_subset = accuracy_score(y_test, y_pred_subset)
+    lda_feature_results[name] = accuracy_subset
+    print(f"{name:25s} ({len(feature_idx):3d} 特徵): {accuracy_subset:.4f} ({accuracy_subset*100:.2f}%)")
+
+print("\n" + "="*60)
+print("特徵組重要性分析 - SVM (Linear)")
+print("="*60)
+
+svm_linear_feature_results = {}
+for name, feature_idx in feature_combinations.items():
+    if len(feature_idx) == 0 or name in ['All Features', 'Color Features', 'Texture Features']:
+        continue
+    
+    X_train_subset = X_train[:, feature_idx]
+    X_test_subset = X_test[:, feature_idx]
+    
+    scaler_subset = StandardScaler()
+    X_train_subset_scaled = scaler_subset.fit_transform(X_train_subset)
+    X_test_subset_scaled = scaler_subset.transform(X_test_subset)
+    
+    svm_subset = SVC(kernel='linear', C=1, random_state=42)
+    svm_subset.fit(X_train_subset_scaled, y_train)
+    y_pred_subset = svm_subset.predict(X_test_subset_scaled)
+    
+    accuracy_subset = accuracy_score(y_test, y_pred_subset)
+    svm_linear_feature_results[name] = accuracy_subset
+    print(f"{name:25s} ({len(feature_idx):3d} 特徵): {accuracy_subset:.4f} ({accuracy_subset*100:.2f}%)")
+
+print("\n" + "="*60)
+print("特徵組重要性分析 - Random Forest")
+print("="*60)
+
+rf_feature_results = {}
+for name, feature_idx in feature_combinations.items():
+    if len(feature_idx) == 0 or name in ['All Features', 'Color Features', 'Texture Features']:
+        continue
+    
+    X_train_subset = X_train[:, feature_idx]
+    X_test_subset = X_test[:, feature_idx]
+    
+    scaler_subset = StandardScaler()
+    X_train_subset_scaled = scaler_subset.fit_transform(X_train_subset)
+    X_test_subset_scaled = scaler_subset.transform(X_test_subset)
+    
+    rf_subset = RandomForestClassifier(n_estimators=200, max_depth=10, min_samples_leaf=5, random_state=42, n_jobs=1)
+    rf_subset.fit(X_train_subset_scaled, y_train)
+    y_pred_subset = rf_subset.predict(X_test_subset_scaled)
+    
+    accuracy_subset = accuracy_score(y_test, y_pred_subset)
+    rf_feature_results[name] = accuracy_subset
+    print(f"{name:25s} ({len(feature_idx):3d} 特徵): {accuracy_subset:.4f} ({accuracy_subset*100:.2f}%)")
+
+# 總結最有幫助的特徵組
+print("\n" + "="*60)
+print("各分類器最有幫助的特徵組總結")
+print("="*60)
+
+print("\nLDA:")
+sorted_lda = sorted(lda_feature_results.items(), key=lambda x: x[1], reverse=True)
+for i, (name, acc) in enumerate(sorted_lda, 1):
+    print(f"  {i}. {name:25s}: {acc:.4f} ({acc*100:.2f}%)")
+
+print("\nSVM (Linear):")
+sorted_svm = sorted(svm_linear_feature_results.items(), key=lambda x: x[1], reverse=True)
+for i, (name, acc) in enumerate(sorted_svm, 1):
+    print(f"  {i}. {name:25s}: {acc:.4f} ({acc*100:.2f}%)")
+
+print("\nRandom Forest:")
+sorted_rf = sorted(rf_feature_results.items(), key=lambda x: x[1], reverse=True)
+for i, (name, acc) in enumerate(sorted_rf, 1):
+    print(f"  {i}. {name:25s}: {acc:.4f} ({acc*100:.2f}%)")
 
 # ==================== 生成視覺化圖表 ====================
 print("\n" + "="*60)
@@ -609,7 +719,7 @@ print("[OK] Random Forest樹數量比較已儲存: output/random_forest_n_estima
 
 # 6. 儲存各類別在各分類器的準確率
 class_acc_data = []
-for clf_name, _, clf_pred, _, _ in all_classifiers_info:
+for clf_name, _, clf_pred, _, _, _ in all_classifiers_info:
     for cls in unique_classes:
         cls_mask = (y_test == cls)
         if np.sum(cls_mask) > 0:
@@ -701,6 +811,13 @@ with open(summary_path, 'w', encoding='utf-8') as f:
     f.write(f"準確率: {best_rf_acc:.4f} ({best_rf_acc*100:.2f}%)\n")
 
 print(f"評估摘要已儲存至: {summary_path}")
+
+# 儲存 data.txt 給可視化程序使用
+data_txt_path = os.path.join(script_dir, 'data.txt')
+with open(data_txt_path, 'w', encoding='utf-8') as f:
+    for name, test_acc, _, time_taken, _, train_acc in all_classifiers_info:
+        f.write(f"{name}\t{test_acc:.4f}\t{time_taken:.2f}\t{train_acc:.4f}\n")
+print(f"分類器資料已儲存至: {data_txt_path}")
 
 print("\n" + "="*60)
 print("完成!")

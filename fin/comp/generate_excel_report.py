@@ -8,9 +8,12 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils.dataframe import dataframe_to_rows
 import os
 
+# 取得腳本所在目錄
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 # 讀取詳細指標CSV
-detailed_df = pd.read_csv('output/detailed_metrics_all_classifiers.csv')
-overall_df = pd.read_csv('output/overall_performance.csv')
+detailed_df = pd.read_csv(os.path.join(script_dir, 'output', 'detailed_metrics_all_classifiers.csv'))
+overall_df = pd.read_csv(os.path.join(script_dir, 'output', 'overall_performance.csv'))
 
 # 解析分類器名稱
 classifiers = ['KNN (K=7)', 'SVM (RBF)', 'SVM (Linear)', 'LDA', 'Random Forest (n=200)']
@@ -122,7 +125,8 @@ for clf in classifiers:
 df_numeric = pd.DataFrame(data_numeric)
 
 # 建立Excel檔案
-with pd.ExcelWriter('Classification_Report.xlsx', engine='openpyxl') as writer:
+excel_path = os.path.join(script_dir, 'Classification_Report.xlsx')
+with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
     # 第一個Sheet：主要報告
     df_main.to_excel(writer, sheet_name='Summary', index=False)
     
@@ -133,7 +137,7 @@ with pd.ExcelWriter('Classification_Report.xlsx', engine='openpyxl') as writer:
     detailed_df.to_excel(writer, sheet_name='Detailed Metrics', index=False)
 
 # 格式化Excel檔案
-wb = openpyxl.load_workbook('Classification_Report.xlsx')
+wb = openpyxl.load_workbook(excel_path)
 
 # 格式化Summary Sheet
 ws = wb['Summary']
@@ -218,15 +222,15 @@ for row_num in range(2, len(detailed_df) + 2):
             cell.fill = PatternFill(start_color='E7E6E6', end_color='E7E6E6', fill_type='solid')
 
 # 保存Excel檔案
-wb.save('Classification_Report.xlsx')
+wb.save(excel_path)
 
-print("✓ Excel報告已生成: Classification_Report.xlsx")
+print(f"✓ Excel報告已生成: {excel_path}")
 print("\n=== 報告內容概覽 ===")
 print("\nSheet 1: Summary (摘要)")
 print(df_main.to_string(index=False))
 print("\n\nSheet 2: Numeric Data (數值數據)")
 print(df_numeric.to_string(index=False))
-print("\n\n✓ 報告已保存到: Classification_Report.xlsx")
+print(f"\n\n✓ 報告已保存到: {excel_path}")
 print("\n表格包含以下信息:")
 print("  - 5個分類方法的性能比較")
 print("  - 執行時間、Precision、Recall、F1-Score、Dice、IoU")

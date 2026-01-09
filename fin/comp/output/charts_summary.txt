@@ -1,0 +1,91 @@
+================================================================================
+Chart Description Documentation
+================================================================================
+
+Chart 1: Training vs Testing Accuracy Comparison (chart1_train_vs_test_accuracy.png)
+--------------------------------------------------------------------------------
+Description: Compares accuracy performance on training and testing sets for each method
+Key Observations:
+  • SVM achieves extremely high training accuracy of 99.93%
+  • KNN and LDA show smaller gaps between training/testing accuracy, better generalization
+  • Random Forest has high training but relatively lower testing accuracy
+
+Chart 2: Overfitting Gap Analysis (chart2_overfitting_analysis.png)
+--------------------------------------------------------------------------------
+Description: Shows the degree of overfitting for each method (Training - Testing Accuracy)
+Key Observations:
+  • Random Forest has the most severe overfitting: 31.46%
+  • KNN has the mildest overfitting: 10.56%
+  • LDA also shows good generalization ability: 8.19%
+  • Gap over 20% indicates severe overfitting, requires model parameter adjustment
+
+Chart 3: Comprehensive Performance Metrics Radar Chart (chart3_performance_radar.png)
+--------------------------------------------------------------------------------
+Description: Displays performance across multiple metrics in radar chart format
+Key Observations:
+  • Larger radar area indicates better overall performance
+  • SVM (RBF) has the best performance on most metrics
+  • IoU metrics are generally low, indicating room for improvement in classification precision
+
+Chart 4: Performance Metrics Heatmap (chart4_metrics_heatmap.png)
+--------------------------------------------------------------------------------
+Description: Uses color intensity to show scores across different metrics
+Key Observations:
+  • Green indicates high scores, red indicates low scores
+  • Generalization ability = 100 - overfitting gap
+  • Quickly identifies strengths and weaknesses of each method
+
+Chart 5: Stability Analysis (chart5_stability_analysis.png)
+--------------------------------------------------------------------------------
+Description: Shows the balance of classification ability across different classes
+Key Observations:
+  • SVM (RBF) has lowest std dev: 14.67%, most balanced classification
+  • KNN has highest std dev: 21.67%, large variation across classes
+  • Smaller std dev indicates more consistent handling of all classes
+
+Chart 6: Best and Worst Classification Classes Analysis (chart6_best_worst_classes.png)
+--------------------------------------------------------------------------------
+Description: Lists the top 3 best and worst performing classes for each method
+Key Observations:
+  • AncestorDinoArt and BWimage are easily classified by most methods
+  • Sculpt and Desert are difficult for most methods to classify
+  • Allows targeted feature engineering for poorly performing classes
+
+圖表7: 綜合排名比較 (chart7_overall_ranking.png)
+--------------------------------------------------------------------------------
+說明：根據加權平均計算各方法的綜合得分並排名
+重點觀察：
+  #1: SVM (RBF) (得分: 73.35)
+  #2: LDA (得分: 71.55)
+  #3: SVM (Linear) (得分: 69.92)
+  #4: Random Forest (n=200) (得分: 66.83)
+  #5: KNN (K=7) (得分: 62.93)
+
+權重配置：測試準確率30%、各項指標各15%、泛化能力15%
+
+================================================================================
+總結與建議
+================================================================================
+1. 最佳整體性能: SVM (RBF) (綜合得分: 73.35)
+   - 測試準確率: 74.67%
+   - 泛化能力: 74.74
+
+2. 最佳泛化能力: LDA (過擬合差距: 8.19%)
+   - 訓練準確率: 77.79%
+   - 測試準確率: 69.60%
+
+3. 最高測試準確率: SVM (RBF) (74.67%)
+
+4. 最均衡分類能力: LDA (標準差: 14.54%)
+
+5. 改進建議:
+   - 針對過擬合嚴重的模型（Random Forest, SVM），考慮:
+     * 增加正則化強度
+     * 減少模型複雜度
+     * 使用交叉驗證調整超參數
+   - 針對表現差的類別（Sculpt, Desert等），考慮:
+     * 增加該類別的訓練樣本
+     * 進行特徵工程和特徵選擇
+     * 使用數據增強技術
+   - 考慮集成學習方法結合多個模型的優勢
+
